@@ -2,6 +2,7 @@ package de.apoth.alaia_android;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -46,11 +47,11 @@ public class TrackListActivity extends Activity {
         myUrlEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                assert(event != null);
-                assert(v != null);
-                assert(v.getText() != null);
-                if(actionId == EditorInfo.IME_ACTION_DONE)
+
                 //if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+                //doesnt work because event seems to be null
+                if(actionId == EditorInfo.IME_NULL)
+
                 {
                     onUrlCalled();
 
@@ -70,6 +71,10 @@ public class TrackListActivity extends Activity {
             return;
         String url = this.myUrlEntry.getText().toString();
         this.myUrlEntry.setText("");
+
+        Intent pageIntent = new Intent(TrackListActivity.this,WebActivity.class);
+        pageIntent.putExtra("url",url);
+        TrackListActivity.this.startActivity(pageIntent);
     }
 
     @Override

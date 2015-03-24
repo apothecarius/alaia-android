@@ -1,17 +1,30 @@
 package de.apoth.alaia_android;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 
 public class WebActivity extends ActionBarActivity {
+
+    private WebView myWebview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+
+        this.myWebview = (WebView)this.findViewById(R.id.webView);
+        this.myWebview.getSettings().setJavaScriptEnabled(true);
+        Intent pageIntent = getIntent();
+        String url = pageIntent.getStringExtra("url");
+
+
+        myWebview.loadUrl(url);
+
     }
 
 
