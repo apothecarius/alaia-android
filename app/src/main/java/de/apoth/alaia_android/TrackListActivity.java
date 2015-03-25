@@ -3,7 +3,7 @@ package de.apoth.alaia_android;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -51,13 +51,8 @@ public class TrackListActivity extends Activity {
                 //if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
                 //doesnt work because event seems to be null
                 if(actionId == EditorInfo.IME_NULL)
-
                 {
                     onUrlCalled();
-
-                    //TODO textentry is not being emptied
-                   // v.setText("");
-                    return true;
                 }
                 return false;
             }
@@ -70,11 +65,16 @@ public class TrackListActivity extends Activity {
         if(this.myUrlEntry == null)
             return;
         String url = this.myUrlEntry.getText().toString();
-        this.myUrlEntry.setText("");
 
+
+        //url = "https://www.google.de";
+        Uri uri = Uri.parse(url);
         Intent pageIntent = new Intent(TrackListActivity.this,WebActivity.class);
-        pageIntent.putExtra("url",url);
+
+        pageIntent.setData(uri);
+        //pageIntent.putExtra("de.apoth.alaia_android.url",url);
         TrackListActivity.this.startActivity(pageIntent);
+        this.myUrlEntry.setText("");
     }
 
     @Override

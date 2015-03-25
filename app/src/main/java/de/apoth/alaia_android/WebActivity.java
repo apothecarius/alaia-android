@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 public class WebActivity extends ActionBarActivity {
@@ -19,12 +20,11 @@ public class WebActivity extends ActionBarActivity {
 
         this.myWebview = (WebView)this.findViewById(R.id.webView);
         this.myWebview.getSettings().setJavaScriptEnabled(true);
+        this.myWebview.setWebViewClient(new WebViewClient());
+
         Intent pageIntent = getIntent();
-        String url = pageIntent.getStringExtra("url");
-
-
-        myWebview.loadUrl(url);
-
+        String uri = pageIntent.getData().toString();
+        myWebview.loadUrl(uri);
     }
 
 
