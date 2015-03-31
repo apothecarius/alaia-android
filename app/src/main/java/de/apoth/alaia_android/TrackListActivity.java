@@ -12,21 +12,35 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.LinkedList;
 
 
 public class TrackListActivity extends Activity {
 
     private EditText myUrlEntry = null;
+    private LinkedList<Track> myTracks;
+    private LinearLayout myTrackView = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_list);
+        myTracks = new LinkedList<>();
 
+        this.myTrackView = (LinearLayout) this.findViewById(R.id.scrollView);
         ImageButton callButton = (ImageButton) this.findViewById(R.id.callButton);
         ImageButton cancelButton = (ImageButton) this.findViewById(R.id.cancelButton);
         this.myUrlEntry = (EditText) this.findViewById(R.id.urlEntry);
         myUrlEntry.setSingleLine();
+
+        ////////////////////
+        myUrlEntry.setText("google.de");
+        //////
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,16 +79,19 @@ public class TrackListActivity extends Activity {
         if(this.myUrlEntry == null)
             return;
         String url = this.myUrlEntry.getText().toString();
+        if(!url.startsWith("http://"))
+            url = "http://"+url;
 
-
-        //url = "https://www.google.de";
         Uri uri = Uri.parse(url);
         Intent pageIntent = new Intent(TrackListActivity.this,WebActivity.class);
-
         pageIntent.setData(uri);
-        //pageIntent.putExtra("de.apoth.alaia_android.url",url);
         TrackListActivity.this.startActivity(pageIntent);
+
+
         this.myUrlEntry.setText("");
+        Track newTrack = new Track(url,this);
+        this.myTracks.add(newTrack);
+        this.myTrackView.addView(newTrack);
     }
 
     @Override
