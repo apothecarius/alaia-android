@@ -9,14 +9,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -24,7 +24,7 @@ public class TrackListActivity extends Activity {
 
     private EditText myUrlEntry = null;
     private LinkedList<Track> myTracks;
-    private LinearLayout myTrackView = null;
+    private LinearLayout myScrollView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +32,14 @@ public class TrackListActivity extends Activity {
         setContentView(R.layout.activity_track_list);
         myTracks = new LinkedList<>();
 
-        this.myTrackView = (LinearLayout) this.findViewById(R.id.scrollView);
+        this.myScrollView = (LinearLayout) this.findViewById(R.id.scrollView);
         ImageButton callButton = (ImageButton) this.findViewById(R.id.callButton);
         ImageButton cancelButton = (ImageButton) this.findViewById(R.id.cancelButton);
         this.myUrlEntry = (EditText) this.findViewById(R.id.urlEntry);
         myUrlEntry.setSingleLine();
 
         ////////////////////
+        //TODO remove, is only for testing
         myUrlEntry.setText("google.de");
         //////
 
@@ -87,11 +88,18 @@ public class TrackListActivity extends Activity {
         pageIntent.setData(uri);
         TrackListActivity.this.startActivity(pageIntent);
 
-
         this.myUrlEntry.setText("");
+
         Track newTrack = new Track(url,this);
+
+        newTrack.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
         this.myTracks.add(newTrack);
-        this.myTrackView.addView(newTrack);
+        this.myScrollView.addView(newTrack);
+
+        /*Button but = new Button(this.getApplicationContext());
+        but.setLayoutParams(new ViewGroup.LayoutParams(300,300));
+        but.setText("halllo");
+        this.myScrollView.addView(but);*/
     }
 
     @Override

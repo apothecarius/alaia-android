@@ -20,6 +20,8 @@ public class WebActivity extends ActionBarActivity {
 
         this.myWebview = (WebView)this.findViewById(R.id.webView);
         this.myWebview.getSettings().setJavaScriptEnabled(true);
+
+        //TODO design custom webclient to receive linkfollowing events
         this.myWebview.setWebViewClient(new WebViewClient());
 
         Intent pageIntent = getIntent();
